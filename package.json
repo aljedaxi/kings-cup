@@ -9,6 +9,7 @@
     "immutable": "^4.0.0-rc.12",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-jss": "^10.4.0",
     "react-scripts": "3.4.3",
     "sanctuary": "^3.1.0"
   },

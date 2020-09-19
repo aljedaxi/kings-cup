@@ -7,6 +7,7 @@ import {
 	maybe,
 	prop,
 } from 'sanctuary';
+import {createUseStyles} from 'react-jss';
 
 const r = max => Math.floor(Math.random() * (max - 1) + 1);
 
@@ -39,32 +40,60 @@ const n = i =>
 : i === 13 ? 'king'
 : i;
 
-const Card = card => 
-	<div>
+const Card = ({card, ...props}) => 
+	<div {...props}>
 		{n(card.get('number'))} of {s(card.get('suit'))}
 	</div>
 
+const topTextStyles = { color: 'white', fontSize: '1.5em' };
+
 const Empty = ({size}) =>
 	size
-		? <div>end of the deck</div>
-		: <div>draw a card</div>
+		? <div style={topTextStyles}>end of the deck</div>
+		: <div style={topTextStyles}>draw a card</div>
 
-export const MaybeCard = ({maybeCard, size}) => maybe (<Empty size={size}/>) (Card) (maybeCard);
+export const MaybeCard = ({maybeCard, size, ...props}) => maybe (<Empty size={size}/>) (card => <Card {...{card, ...props}}/>) (maybeCard);
+
+const useStyles = createUseStyles({
+	page: {
+		height: '100%',
+		display: 'grid',
+		gridTemplateRows: '1fr 1fr 1fr',
+		gridTemplateColumns: '1fr 1fr 1fr'
+	},
+	container: {
+		background: 'black',
+		gridColumnStart: 2,
+		gridColumnEnd: 3,
+		gridRowStart: 2,
+		gridRowEnd: 3,
+		display: 'grid',
+		alignItems: 'center',
+		justifyItems: 'center',
+	},
+	card: topTextStyles,
+	drawCard: {
+		borderStyle: 'none',
+		background: 'white',
+		fontSize: '1.5em',
+	},
+});
 
 export const Index = props => {
 	const {drawCard, drawnCards} = useDeck();
 	const [mostRecentCard, setMostRecentCard] = useState(Nothing);
+	const {page, card, container, drawCard: button} = useStyles();
 
 	const handleCardDraw = _ => {
 		setMostRecentCard(drawCard());
 	};
 
 	return (
-		<div>
-			<div>
-				<MaybeCard maybeCard={mostRecentCard} size={drawnCards.size}/>
+		<div className={page}>
+			<div className={container}>
+				<MaybeCard className={card} maybeCard={mostRecentCard} size={drawnCards.size}/>
+				<button className={button} onClick={handleCardDraw}>draw card</button>
 			</div>
-			<button onClick={handleCardDraw}>draw card</button>
 		</div>
 	);
 };

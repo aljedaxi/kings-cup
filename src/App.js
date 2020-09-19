@@ -4,9 +4,7 @@ import {Index} from './pages/Index';
 
 function App() {
   return (
-		<div>
-			<Index/>
-		</div>
+		<Index/>
   );
 }
 
