@@ -1,1 +1,1 @@
-[drink up ;p](kings-cup.surge.sh)
+[drink up ;p](http://kings-cup.surge.sh)
