@@ -1,1 +1,1 @@
-drink up ;p
+[drink up ;p](kings-cup.surge.sh)
